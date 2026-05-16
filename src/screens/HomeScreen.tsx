@@ -1,0 +1,129 @@
+import { useTheme } from "@/hooks/themeHook";
+import { Pressable, ScrollView, Text, View } from "react-native";
+
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+export function HomeScreenComponent() {
+  const { colors } = useTheme();
+
+  const menuItems = [
+    {
+      title: "Find Dansals",
+      icon: "location",
+    },
+    {
+      title: "Nearby Events",
+      icon: "calendar",
+    },
+    {
+      title: "Favorite Places",
+      icon: "heart",
+    },
+    {
+      title: "Notifications",
+      icon: "notifications",
+    },
+    {
+      title: "Map View",
+      icon: "map",
+    },
+    {
+      title: "Settings",
+      icon: "settings",
+    },
+  ];
+
+  return (
+    <ScrollView
+      style={{
+        flex: 1,
+        backgroundColor: colors.background,
+      }}
+      contentContainerStyle={{
+        padding: 20,
+      }}
+    >
+      {/* Header */}
+      <View
+        style={{
+          marginBottom: 30,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: colors.text,
+          }}
+        >
+          Dansal App
+        </Text>
+
+        <Text
+          style={{
+            marginTop: 6,
+            fontSize: 16,
+            color: colors.subText,
+          }}
+        >
+          Find nearby dansals and events
+        </Text>
+      </View>
+
+      {/* Menu Cards */}
+      <View
+        style={{
+          gap: 16,
+        }}
+      >
+        {menuItems.map((item, index) => (
+          <Pressable
+            key={index}
+            style={{
+              backgroundColor: colors.card,
+              borderRadius: 18,
+              padding: 18,
+
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+
+              borderWidth: 1,
+              borderColor: colors.border,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 14,
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: colors.primary,
+                  padding: 12,
+                  borderRadius: 14,
+                }}
+              >
+                <Ionicons name={item.icon as any} size={22} color="white" />
+              </View>
+
+              <Text
+                style={{
+                  fontSize: 17,
+                  fontWeight: "600",
+                  color: colors.text,
+                }}
+              >
+                {item.title}
+              </Text>
+            </View>
+
+            <Ionicons name="chevron-forward" size={20} color={colors.subText} />
+          </Pressable>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
