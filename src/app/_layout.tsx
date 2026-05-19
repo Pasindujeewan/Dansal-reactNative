@@ -6,7 +6,7 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <SafeAreaProvider>
-        <StatusBar style="light" />
+        <StatusBar style="auto" />
         <Stack>
           <Stack.Screen
             name="(tabs)"

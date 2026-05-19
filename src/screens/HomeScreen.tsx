@@ -11,14 +11,7 @@ export function HomeScreenComponent() {
       title: "Find Dansals",
       icon: "location",
     },
-    {
-      title: "Nearby Events",
-      icon: "calendar",
-    },
-    {
-      title: "Favorite Places",
-      icon: "heart",
-    },
+
     {
       title: "Notifications",
       icon: "notifications",
