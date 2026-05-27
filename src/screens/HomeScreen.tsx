@@ -1,6 +1,6 @@
 import { useTheme } from "@/hooks/themeHook";
 import { Pressable, ScrollView, Text, View } from "react-native";
-
+import { registerUser } from "@/api/registerUser";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export function HomeScreenComponent() {
@@ -8,21 +8,12 @@ export function HomeScreenComponent() {
 
   const menuItems = [
     {
-      title: "Find Dansals",
+      title: "දන්සල් සොයන්න",
       icon: "location",
     },
-
     {
-      title: "Notifications",
-      icon: "notifications",
-    },
-    {
-      title: "Map View",
-      icon: "map",
-    },
-    {
-      title: "Settings",
-      icon: "settings",
+      title: "දන්සල් ඇතුලත් කරන්න",
+      icon: "add",
     },
   ];
 
@@ -43,6 +34,7 @@ export function HomeScreenComponent() {
         }}
       >
         <Text
+          onPress={registerUser}
           style={{
             fontSize: 32,
             fontWeight: "bold",
@@ -66,6 +58,7 @@ export function HomeScreenComponent() {
       {/* Menu Cards */}
       <View
         style={{
+          flexDirection: "column",
           gap: 16,
         }}
       >
