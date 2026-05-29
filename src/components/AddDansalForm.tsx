@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  ScrollView,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { LatLng } from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/themeHook";
-
+import * as DocumentPicker from "expo-document-picker";
+import { getUrl } from "@/api/getUrl";
 type Props = {
   cordinate: LatLng | null;
   onClose: () => void;
@@ -37,6 +47,20 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
     queueDistance: null,
     image: null,
   });
+  const [image, setImage] = useState<DocumentPicker.DocumentPickerAsset | null>(
+    null,
+  );
+
+  const pickImage = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: "image/*",
+      copyToCacheDirectory: true,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0]);
+    }
+  };
 
   function updateField(key: keyof FormData, value: string | null) {
     setForm((prev) => ({
@@ -44,22 +68,28 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
       [key]: value,
     }));
   }
-
+  async function handleSave() {
+    console.log("Saving dansal with data:", form, cordinate);
+    const url = await getUrl({ image });
+    console.log("Image URL:", url);
+  }
   return (
-    <View
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={20}
       style={{
         position: "absolute",
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-
+        flex: 1,
         backgroundColor: colors.overlay,
 
         justifyContent: "center",
 
         zIndex: 9,
       }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
         style={{
@@ -82,8 +112,10 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
 
           elevation: 8,
         }}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           paddingBottom: 30,
+          flexGrow: 1,
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -381,33 +413,41 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
               </Text>
 
               <Pressable
+                onPress={pickImage}
                 style={{
                   borderWidth: 1,
-
                   borderStyle: "dashed",
-
                   borderColor: colors.border,
-
                   borderRadius: 14,
-
                   padding: 20,
-
                   alignItems: "center",
-
                   backgroundColor: colors.inputBackground,
                 }}
               >
-                <Ionicons name="camera" size={28} color={colors.primary} />
+                {image ? (
+                  <Image
+                    source={{ uri: image.uri }}
+                    style={{
+                      width: 100,
+                      height: 100,
+                      borderRadius: 10,
+                    }}
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <>
+                    <Ionicons name="camera" size={28} color={colors.primary} />
 
-                <Text
-                  style={{
-                    marginTop: 8,
-
-                    color: colors.subText,
-                  }}
-                >
-                  ඡායාරූපයක් එක් කරන්න
-                </Text>
+                    <Text
+                      style={{
+                        marginTop: 8,
+                        color: colors.subText,
+                      }}
+                    >
+                      ඡායාරූපයක් එක් කරන්න
+                    </Text>
+                  </>
+                )}
               </Pressable>
             </View>
           )}
@@ -415,7 +455,7 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
 
         {/* Save */}
         <Pressable
-          onPress={() => console.log(form)}
+          onPress={() => handleSave()}
           style={{
             marginTop: 20,
 
@@ -439,6 +479,6 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
           </Text>
         </Pressable>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

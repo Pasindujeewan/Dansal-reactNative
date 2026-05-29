@@ -1,10 +1,12 @@
 import { useTheme } from "@/hooks/themeHook";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { registerUser } from "@/api/registerUser";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { router } from "expo-router";
+import { useAuth } from "@/hooks/authHook";
 
 export function HomeScreenComponent() {
   const { colors } = useTheme();
+  const { user } = useAuth();
 
   const menuItems = [
     {
@@ -33,8 +35,8 @@ export function HomeScreenComponent() {
           marginBottom: 30,
         }}
       >
+        <Text>{user ? `Welcome, ${user.name}` : "Welcome to Dansal App!"}</Text>
         <Text
-          onPress={registerUser}
           style={{
             fontSize: 32,
             fontWeight: "bold",
@@ -51,7 +53,7 @@ export function HomeScreenComponent() {
             color: colors.subText,
           }}
         >
-          Find nearby dansals and events
+          Find nearby dansals and eventsA
         </Text>
       </View>
 
@@ -64,6 +66,9 @@ export function HomeScreenComponent() {
       >
         {menuItems.map((item, index) => (
           <Pressable
+            onPress={() => {
+              router.push("/Login");
+            }}
             key={index}
             style={{
               backgroundColor: colors.card,
