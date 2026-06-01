@@ -14,6 +14,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/themeHook";
 import * as DocumentPicker from "expo-document-picker";
 import { getUrl } from "@/api/getUrl";
+import { addDansal } from "@/api/addDansal";
+import { useAuth } from "@/hooks/authHook";
+import { ErrorAlert } from "./errorAlert";
+import SuccessAlert from "./sucsessAlert";
+import GlobalLoader from "./LoadingScreen";
+
 type Props = {
   cordinate: LatLng | null;
   onClose: () => void;
@@ -36,10 +42,17 @@ const queueOptions = [
 
 export function AddDansalForm({ cordinate, onClose }: Props) {
   const { colors } = useTheme();
-
+  const { refreshToken, accessToken, login, user } = useAuth();
   const [showExtraFields, setShowExtraFields] = useState(false);
 
   const [showQueueOptions, setShowQueueOptions] = useState(false);
+
+  const [error, setError] = useState("");
+  const [errorVisible, setErrorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isSuccessVisible, setIsSuccessVisible] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [form, setForm] = useState<FormData>({
     type: "",
@@ -69,9 +82,44 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
     }));
   }
   async function handleSave() {
-    console.log("Saving dansal with data:", form, cordinate);
-    const url = await getUrl({ image });
-    console.log("Image URL:", url);
+    try {
+      setIsLoading(true);
+      console.log("Saving dansal with data:", form, cordinate);
+      const url = await getUrl({ image });
+      const res = await addDansal({
+        type: form.type,
+        description: form.description,
+        queueDistance: form.queueDistance,
+        imageUrl: url,
+        coordinates: [cordinate?.longitude ?? 0, cordinate?.latitude ?? 0],
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
+      console.log("Login Sckips", res.newTokens);
+      if (
+        res.newTokens?.accessToken !== accessToken ||
+        res.newTokens.refreshToken !== refreshToken
+      ) {
+        console.log("Login happen");
+        await login(
+          user!,
+          res.newTokens.refreshToken,
+          res.newTokens.accessToken,
+        );
+        setSuccessMessage("දන්සල සාර්ථකව ඇතුලත් කරන ලදි!");
+        setIsSuccessVisible(true);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("An unknown error occurred");
+      }
+      setErrorVisible(true);
+    } finally {
+      setIsLoading(false);
+    }
   }
   return (
     <KeyboardAvoidingView
@@ -91,6 +139,20 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
       }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
+      <ErrorAlert
+        visible={errorVisible}
+        onClose={() => setErrorVisible(false)}
+        message={error}
+      />
+      <SuccessAlert
+        visible={isSuccessVisible}
+        onClose={() => {
+          setIsSuccessVisible(false);
+          onClose();
+        }}
+        message={successMessage}
+      />
+      <GlobalLoader visible={isLoading} />
       <ScrollView
         style={{
           position: "absolute",

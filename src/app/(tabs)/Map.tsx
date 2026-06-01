@@ -1,18 +1,24 @@
 import { Text, View, Alert } from "react-native";
 import MapView, { LatLng, Marker } from "react-native-maps";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MapPressEvent } from "react-native-maps";
 import MapAlert from "@/components/MapAlert";
 import { useTheme } from "@/hooks/themeHook";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { AddDansalForm } from "@/components/AddDansalForm";
+import { getDansal } from "@/api/getDansal";
+import { Region } from "react-native-maps";
+import { MarkerType } from "@/types/markerType";
 
 export default function MapScreen() {
   const [selected, setSelected] = useState<LatLng | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [markers, setMarkers] = useState<MarkerType[]>([]);
 
   const { colors } = useTheme();
+
+  const lastRegionRef = useRef<Region | null>(null);
 
   function handleDansalPress() {
     setSelected(null);
@@ -26,6 +32,35 @@ export default function MapScreen() {
     setShowAlert(true);
     setShowForm(false);
   }
+
+  async function handleGetDansal(region: Region) {
+    try {
+      if (!lastRegionRef.current) {
+        lastRegionRef.current = region;
+        const res = await getDansal(region);
+        setMarkers(res.dansals);
+        console.log("Fetched dansals:", res.dansals);
+        return;
+      }
+      const latDiff = Math.abs(
+        region.latitude - lastRegionRef.current.latitude,
+      );
+
+      const lngDiff = Math.abs(
+        region.longitude - lastRegionRef.current.longitude,
+      );
+
+      if (latDiff > 0.01 || lngDiff > 0.01) {
+        lastRegionRef.current = region;
+        const res = await getDansal(region);
+        setMarkers(res.dansals);
+        console.log("Fetched dansals:", res.dansals);
+      }
+    } catch (error) {
+      console.error("Error fetching dansals:", error);
+    }
+  }
+
   return (
     <View style={{ flex: 1 }}>
       {showForm && (
@@ -57,7 +92,7 @@ export default function MapScreen() {
               marginRight: 8,
             }}
           >
-            දන්සල ඇතුලත් කිරීමට අදාල ස්ථානය මාර්ක් කරන්න
+            දන්සල ඇතුලත් කිරීමට අදාල ස්ථානය මාර්ක් කරන්නA
           </Text>
           <Ionicons name="close-circle" size={22} color={"black"} />
         </View>
@@ -73,6 +108,7 @@ export default function MapScreen() {
 
       <MapView
         style={{ flex: 1 }}
+        onRegionChangeComplete={handleGetDansal}
         initialRegion={{
           latitude: 6.9271,
           longitude: 79.8612,
@@ -97,6 +133,17 @@ export default function MapScreen() {
             description="Selected place"
           />
         )}
+        {markers.map((marker) => (
+          <Marker
+            key={marker.id}
+            coordinate={{
+              latitude: marker.coordinates[1],
+              longitude: marker.coordinates[0],
+            }}
+            title={marker.type}
+            description="Dansal"
+          />
+        ))}
       </MapView>
     </View>
   );

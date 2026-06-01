@@ -1,4 +1,10 @@
-export async function refreshAccessToken(refreshToken: string) {
+type Tokens = {
+  accessToken: string;
+  refreshToken: string;
+};
+export async function refreshAccessToken(
+  refreshToken: string,
+): Promise<Tokens> {
   console.log("Refreshing access token with refresh token:", refreshToken);
   try {
     const response = await fetch(`http://10.0.2.2:3000/api/auth/refresh`, {

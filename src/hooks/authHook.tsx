@@ -90,6 +90,7 @@ export default function AuthProvider({
     setUser(user);
     setRefreshToken(refreshToken);
     setAccessToken(accessToken);
+    console.log("new Refresh Token is create", refreshToken);
   }
   async function logout() {
     await SecureStore.deleteItemAsync("user");
