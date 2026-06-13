@@ -18,7 +18,7 @@ export async function refreshAccessToken(
     });
     const data = await response.json();
     if (!response.ok || !data.success) {
-      throw new Error(data.message || "Failed to refresh access token");
+      throw new Error(data.message || "Failed to refresh access toke");
     }
     console.log("Refresh token is response:A", data);
     return data.token;

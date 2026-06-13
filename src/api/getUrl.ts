@@ -22,6 +22,7 @@ export async function getUrl({ image }: Props) {
     formData.append("signature", signatureData.signature);
     formData.append("folder", "dansal-app");
     formData.append("upload_preset", "dansal-images");
+
     const res = await fetch(
       `https://api.cloudinary.com/v1_1/${signatureData.cloudName}/image/upload`,
       {

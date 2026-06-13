@@ -1,4 +1,5 @@
 import { refreshAccessToken } from "./refreshToken";
+import type { returnType } from "@/types/returnType";
 type Props = {
   type: string;
   description: string;
@@ -8,15 +9,7 @@ type Props = {
   accessToken: string | null;
   refreshToken: string | null;
 };
-type Tokens = {
-  accessToken: string;
-  refreshToken: string;
-};
 
-type returnRes = {
-  data: any;
-  newTokens: Tokens;
-};
 export async function addDansal({
   type,
   description,
@@ -58,7 +51,7 @@ export async function addDansal({
     if (!res.ok || !data.success) {
       throw new Error(data.message || "dansal add failed");
     }
-    return { data, newTokens: { accessToken, refreshToken } } as returnRes;
+    return { data, newTokens: { accessToken, refreshToken } } as returnType;
   } catch (error) {
     console.log("error occur when add dansal", error);
     if (error instanceof Error) {

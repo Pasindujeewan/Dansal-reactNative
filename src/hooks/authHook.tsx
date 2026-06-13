@@ -4,6 +4,7 @@ import * as SecureStore from "expo-secure-store";
 import { useEffect } from "react";
 import { verifyUser } from "@/api/verifyUser";
 import { ErrorAlert } from "@/components/errorAlert";
+import GlobalLoader from "@/components/LoadingScreen";
 
 type AuthContextType = {
   user: user | null;
@@ -77,7 +78,7 @@ export default function AuthProvider({
     }
   }
   async function login(
-    user: user,
+    user: user | null,
     refreshToken: string | null,
     accessToken: string | null,
   ) {
@@ -104,6 +105,7 @@ export default function AuthProvider({
     <AuthContext.Provider
       value={{ user, loading, refreshToken, accessToken, login, logout }}
     >
+      <GlobalLoader visible={loading} />
       {children}
       <ErrorAlert
         visible={showError}

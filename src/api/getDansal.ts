@@ -3,9 +3,9 @@ import { Region } from "react-native-maps";
 export async function getDansal(region: Region) {
   const north = region.latitude + region.latitudeDelta / 2;
   const south = region.latitude - region.latitudeDelta / 2;
-
   const east = region.longitude + region.longitudeDelta / 2;
   const west = region.longitude - region.longitudeDelta / 2;
+
   const searchParams = new URLSearchParams({
     north: north.toString(),
     south: south.toString(),

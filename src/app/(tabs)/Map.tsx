@@ -8,13 +8,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { AddDansalForm } from "@/components/AddDansalForm";
 import { getDansal } from "@/api/getDansal";
 import { Region } from "react-native-maps";
-import { MarkerType } from "@/types/markerType";
+import { dansalShort } from "@/types/dansalType";
+import { DansalBottomWindow } from "@/components/dansalBottomWindow";
 
 export default function MapScreen() {
   const [selected, setSelected] = useState<LatLng | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [markers, setMarkers] = useState<MarkerType[]>([]);
+  const [markers, setMarkers] = useState<dansalShort[]>([]);
 
   const { colors } = useTheme();
 
@@ -135,16 +136,21 @@ export default function MapScreen() {
         )}
         {markers.map((marker) => (
           <Marker
+            onPress={(event) => {
+              event.stopPropagation();
+              handleDansalPress();
+            }}
             key={marker.id}
             coordinate={{
-              latitude: marker.coordinates[1],
-              longitude: marker.coordinates[0],
+              latitude: marker.location[1],
+              longitude: marker.location[0],
             }}
             title={marker.type}
             description="Dansal"
           />
         ))}
       </MapView>
+      <DansalBottomWindow />
     </View>
   );
 }
