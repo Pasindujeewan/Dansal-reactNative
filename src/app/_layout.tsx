@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AuthProvider from "@/hooks/authHook";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 export default function TabLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

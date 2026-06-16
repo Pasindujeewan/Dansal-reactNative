@@ -1,3 +1,8 @@
+/**
+ * File: src/components/MapAlert.tsx
+ * Purpose: Small prompt shown on the map asking whether to add a Dansal at a location.
+ * Exports: default `MapAlert` component.
+ */
 import { Pressable, Text, View } from "react-native";
 import { LatLng } from "react-native-maps";
 

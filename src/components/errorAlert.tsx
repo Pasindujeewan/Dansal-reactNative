@@ -1,3 +1,8 @@
+/**
+ * File: src/components/errorAlert.tsx
+ * Purpose: Modal component to display error messages to the user.
+ * Exports: `ErrorAlert` - React component.
+ */
 import React, { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";

@@ -1,3 +1,8 @@
+/**
+ * File: src/components/Avatar.tsx
+ * Purpose: Simple avatar component that renders initials from a user's name.
+ * Exports: default `Avatar` component.
+ */
 import { Text, View } from "react-native";
 
 type AvatarProps = {

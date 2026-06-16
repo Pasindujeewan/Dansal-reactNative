@@ -16,14 +16,20 @@ export default function MapScreen() {
   const [showAlert, setShowAlert] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [markers, setMarkers] = useState<dansalShort[]>([]);
+  const [isDansalVisible, setisDansalVisible] = useState(false);
+  const [selectedDansal, setSelectedDansal] = useState<dansalShort | null>(
+    null,
+  );
 
   const { colors } = useTheme();
 
   const lastRegionRef = useRef<Region | null>(null);
 
-  function handleDansalPress() {
+  function handleDansalPress(dansal: dansalShort) {
     setSelected(null);
     setShowAlert(false);
+    setSelectedDansal(dansal);
+    setisDansalVisible(true);
   }
   console.log("Selected coordinate:", selected);
   function handleMapPress(event: MapPressEvent) {
@@ -32,6 +38,7 @@ export default function MapScreen() {
     setSelected(coordinate);
     setShowAlert(true);
     setShowForm(false);
+    setisDansalVisible(false);
   }
 
   async function handleGetDansal(region: Region) {
@@ -98,6 +105,7 @@ export default function MapScreen() {
           <Ionicons name="close-circle" size={22} color={"black"} />
         </View>
       )}
+
       <MapAlert
         visible={showAlert}
         onAdd={() => {
@@ -106,7 +114,13 @@ export default function MapScreen() {
         }}
         onClose={() => setShowAlert(false)}
       />
-
+      <DansalBottomWindow
+        visible={isDansalVisible}
+        onClose={() => {
+          setisDansalVisible(false);
+        }}
+        selectedDansal={selectedDansal}
+      />
       <MapView
         style={{ flex: 1 }}
         onRegionChangeComplete={handleGetDansal}
@@ -124,7 +138,6 @@ export default function MapScreen() {
           description="Capital of Sri Lanka"
           onPress={(event) => {
             event.stopPropagation();
-            handleDansalPress();
           }}
         />
         {selected && (
@@ -138,7 +151,7 @@ export default function MapScreen() {
           <Marker
             onPress={(event) => {
               event.stopPropagation();
-              handleDansalPress();
+              handleDansalPress(marker);
             }}
             key={marker.id}
             coordinate={{
@@ -150,7 +163,6 @@ export default function MapScreen() {
           />
         ))}
       </MapView>
-      <DansalBottomWindow />
     </View>
   );
 }

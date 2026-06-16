@@ -1,3 +1,7 @@
+/**
+ * File: src/types/dansalType.ts
+ * Purpose: Type definitions for `dansal` and `dansalShort` used by the app.
+ */
 import type { user } from "./userType";
 
 export type dansal = {

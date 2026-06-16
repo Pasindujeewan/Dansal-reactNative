@@ -1,3 +1,7 @@
+/**
+ * File: src/types/colurType.tsx
+ * Purpose: Theme color palette type definition.
+ */
 export type ThemeColors = {
   background: string;
   card: string;

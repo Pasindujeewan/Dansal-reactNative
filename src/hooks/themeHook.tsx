@@ -1,3 +1,7 @@
+/**
+ * File: src/hooks/themeHook.tsx
+ * Purpose: Theme context provider and hook. Exposes `useTheme` and `ThemeProvider`.
+ */
 import { createContext, useContext, useState } from "react";
 import { darkTheme, lightTheme } from "../constants/colors";
 import { ThemeContextType } from "../types/themeType";

@@ -1,3 +1,8 @@
+/**
+ * File: src/screens/HomeScreen.tsx
+ * Purpose: Home screen component showing main menu and welcome information.
+ * Exports: `HomeScreenComponent`.
+ */
 import { useTheme } from "@/hooks/themeHook";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -14,7 +19,7 @@ export function HomeScreenComponent() {
       icon: "location",
     },
     {
-      title: "දන්සල් ඇතුලත් කරන්න",
+      title: "දන්සල් ඇතුලත් කරන්න ",
       icon: "add",
     },
   ];
@@ -35,7 +40,11 @@ export function HomeScreenComponent() {
           marginBottom: 30,
         }}
       >
-        <Text>{user ? `Welcome, ${user.name}` : "Welcome to Dansal App!"}</Text>
+        <Text>
+          {user
+            ? `Welcome, ${user.name} ${user.email}`
+            : "Welcome to Dansal App!"}
+        </Text>
         <Text
           style={{
             fontSize: 32,

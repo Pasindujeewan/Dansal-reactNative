@@ -1,3 +1,8 @@
+/**
+ * File: src/components/LoadingScreen.tsx
+ * Purpose: Small loading indicator component used across the app.
+ * Exports: default `GlobalLoader` component.
+ */
 import { View, Animated, Easing, StyleSheet } from "react-native";
 import { useEffect, useRef } from "react";
 

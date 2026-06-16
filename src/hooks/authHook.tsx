@@ -1,3 +1,8 @@
+/**
+ * File: src/hooks/authHook.tsx
+ * Purpose: Authentication context and hooks. Provides `AuthProvider` and `useAuth`.
+ * Notes: Manages secure token storage and user session state.
+ */
 import { createContext, useContext, useState } from "react";
 import { user } from "../types/userType";
 import * as SecureStore from "expo-secure-store";

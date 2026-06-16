@@ -1,3 +1,8 @@
+/**
+ * File: src/components/AddDansalForm.tsx
+ * Purpose: Form component for adding a new Dansal (location, details, image).
+ * Exports: `AddDansalForm` - React component.
+ */
 import { useState } from "react";
 import {
   View,

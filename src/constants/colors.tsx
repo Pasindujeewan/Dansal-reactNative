@@ -1,3 +1,8 @@
+/**
+ * File: src/constants/colors.tsx
+ * Purpose: Defines `lightTheme` and `darkTheme` color palettes used by the app.
+ * Exports: `lightTheme`, `darkTheme`.
+ */
 import { ThemeColors } from "../types/colurType";
 
 export const lightTheme: ThemeColors = {
