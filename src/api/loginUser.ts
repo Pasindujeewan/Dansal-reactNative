@@ -1,6 +1,8 @@
+import { apiFetch } from "./apiFetch";
+
 export async function loginUser(email: string, password: string) {
   try {
-    const res = await fetch(`http://10.0.2.2:3000/api/auth/login`, {
+    const res = await apiFetch(`http://10.0.2.2:3000/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

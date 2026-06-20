@@ -1,5 +1,7 @@
 import * as DocumentPicker from "expo-document-picker";
+import { apiFetch } from "./apiFetch";
 import { getSignature } from "./getSignature";
+
 type Props = {
   image: DocumentPicker.DocumentPickerAsset | null;
 };
@@ -23,7 +25,7 @@ export async function getUrl({ image }: Props) {
     formData.append("folder", "dansal-app");
     formData.append("upload_preset", "dansal-images");
 
-    const res = await fetch(
+    const res = await apiFetch(
       `https://api.cloudinary.com/v1_1/${signatureData.cloudName}/image/upload`,
       {
         method: "POST",

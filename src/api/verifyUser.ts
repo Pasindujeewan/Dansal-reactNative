@@ -1,3 +1,4 @@
+import { apiFetch } from "./apiFetch";
 import { refreshAccessToken } from "./refreshToken";
 
 export async function verifyUser(
@@ -5,7 +6,7 @@ export async function verifyUser(
   refreshToken: string | null,
 ) {
   try {
-    const response = await fetch("http://10.0.2.2:3000/api/auth/me", {
+    const response = await apiFetch("http://10.0.2.2:3000/api/auth/me", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,

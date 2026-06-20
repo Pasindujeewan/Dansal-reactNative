@@ -1,6 +1,10 @@
+import { apiFetch } from "./apiFetch";
+
 export async function getSingleDansal(dansalId: string) {
   try {
-    const res = await fetch(`http://10.0.2.2:3000/api/dansals/get/${dansalId}`);
+    const res = await apiFetch(
+      `http://10.0.2.2:3000/api/dansals/get/${dansalId}`,
+    );
     const data = await res.json();
     if (!res.ok || !data.success) {
       throw new Error(data.message || "Failed to fetch dansals");

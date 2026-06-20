@@ -1,0 +1,80 @@
+{
+  "common": {
+    "welcome": "සාදරයෙන් පිළිගනිමු",
+    "home": "මුල් පිටුව",
+    "map": "සිතියම",
+    "profile": "පැතිකඩ",
+    "settings": "සැකසුම්",
+    "login": "පිවිසෙන්න",
+    "register": "ලියාපදිංචි වන්න",
+    "logout": "ඉවත් වන්න",
+    "cancel": "අවලංගු කරන්න",
+    "save": "සුරකින්න",
+    "ok": "හරි",
+    "yes": "ඔව්",
+    "no": "නැහැ",
+    "loading": "පූරණය වෙමින්...",
+    "search": "සොයන්න"
+  },
+
+  "homeScreen": {
+    "welcomeTitle": "Dansal යෙදුමට සාදරයෙන් පිළිගනිමු!",
+    "appName": "Dansal යෙදුම",
+    "description": "ඔබ අසල දන්සල් සහ සිදුවීම් සොයා ගන්න",
+    "findNearby": "අසල දන්සල් සොයන්න",
+    "addDansal": "අලුත් දන්සලක් එක් කරන්න"
+  },
+
+  "profile": {
+    "guestMessage": "පැතිකඩ තොරතුරු බැලීමට කරුණාකර පිවිසෙන්න හෝ ලියාපදිංචි වන්න.",
+    "loginButton": "පිවිසෙන්න",
+    "registerButton": "ලියාපදිංචි වන්න"
+  },
+
+  "navigation": {
+    "home": "මුල් පිටුව",
+    "map": "සිතියම",
+    "profile": "පැතිකඩ",
+    "settings": "සැකසුම්"
+  },
+
+  "settings": {
+    "title": "සැකසුම්",
+    "language": "භාෂාව",
+    "theme": "තේමාව",
+    "darkMode": "අඳුරු තේමාව",
+    "lightMode": "දීප්තිමත් තේමාව",
+    "system": "පද්ධති පෙරනිමිය",
+    "notifications": "දැනුම්දීම්"
+  },
+
+  "language": {
+    "english": "English",
+    "sinhala": "සිංහල",
+    "selectLanguage": "භාෂාව තෝරන්න"
+  },
+
+  "theme": {
+    "light": "දීප්තිමත්",
+    "dark": "අඳුරු",
+    "system": "පද්ධතිය"
+  },
+
+  "alerts": {
+    "loginRequired": "කරුණාකර පළමුව පිවිසෙන්න.",
+    "networkError": "ජාල දෝෂයක් ඇතිවිය. නැවත උත්සාහ කරන්න.",
+    "somethingWentWrong": "යම් දෝෂයක් ඇතිවිය."
+  },
+
+  "toast": {
+    "dansalAdded": "දන්සල සාර්ථකව එක් කරන ලදී.",
+    "dansalUpdated": "දන්සල සාර්ථකව යාවත්කාලීන කරන ලදී.",
+    "saved": "සාර්ථකව සුරකින ලදී."
+  },
+
+  "validation": {
+    "required": "මෙම ක්ෂේත්‍රය අනිවාර්ය වේ.",
+    "invalidEmail": "වලංගු ඊමේල් ලිපිනයක් ඇතුළත් කරන්න.",
+    "passwordTooShort": "මුරපදය අවම වශයෙන් අක්ෂර 6ක් විය යුතුය."
+  }
+}

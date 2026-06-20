@@ -3,119 +3,89 @@
  * Purpose: Home screen component showing main menu and welcome information.
  * Exports: `HomeScreenComponent`.
  */
+import { useAuth } from "@/hooks/authHook";
 import { useTheme } from "@/hooks/themeHook";
-import { Pressable, ScrollView, Text, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
-import { useAuth } from "@/hooks/authHook";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export function HomeScreenComponent() {
   const { colors } = useTheme();
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   const menuItems = [
     {
-      title: "දන්සල් සොයන්න",
+      title: t("homeScreen.findNearby"),
       icon: "location",
+      route: "/Login",
     },
     {
-      title: "දන්සල් ඇතුලත් කරන්න ",
+      title: t("homeScreen.addDansal"),
       icon: "add",
+      route: "/Login",
     },
   ];
 
   return (
     <ScrollView
-      style={{
-        flex: 1,
-        backgroundColor: colors.background,
-      }}
-      contentContainerStyle={{
-        padding: 20,
-      }}
+      style={[styles.screen, { backgroundColor: colors.background }]}
+      contentContainerStyle={styles.content}
+      showsVerticalScrollIndicator={false}
     >
       {/* Header */}
-      <View
-        style={{
-          marginBottom: 30,
-        }}
-      >
-        <Text>
-          {user
-            ? `Welcome, ${user.name} ${user.email}`
-            : "Welcome to Dansal App!"}
-        </Text>
-        <Text
-          style={{
-            fontSize: 32,
-            fontWeight: "bold",
-            color: colors.text,
-          }}
+      <View style={styles.header}>
+        <View
+          style={[
+            styles.greetingPill,
+            { backgroundColor: colors.primary + "18" },
+          ]}
         >
-          Dansal App
+          <Ionicons name="hand-right" size={14} color={colors.primary} />
+          <Text style={[styles.greetingText, { color: colors.primary }]}>
+            {user
+              ? `${t("common.welcome")}, ${user.name}`
+              : t("homeScreen.welcomeTitle")}
+          </Text>
+        </View>
+
+        <Text style={[styles.appName, { color: colors.text }]}>
+          {t("homeScreen.appName")}
         </Text>
 
-        <Text
-          style={{
-            marginTop: 6,
-            fontSize: 16,
-            color: colors.subText,
-          }}
-        >
-          Find nearby dansals and eventsA
+        <Text style={[styles.description, { color: colors.subText }]}>
+          {t("homeScreen.description")}
         </Text>
       </View>
 
       {/* Menu Cards */}
-      <View
-        style={{
-          flexDirection: "column",
-          gap: 16,
-        }}
-      >
+      <View style={styles.menuList}>
         {menuItems.map((item, index) => (
           <Pressable
-            onPress={() => {
-              router.push("/Login");
-            }}
+            onPress={() => router.push(item.route as any)}
             key={index}
-            style={{
-              backgroundColor: colors.card,
-              borderRadius: 18,
-              padding: 18,
-
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-
-              borderWidth: 1,
-              borderColor: colors.border,
-            }}
+            style={({ pressed }) => [
+              styles.menuCard,
+              {
+                backgroundColor: colors.card,
+                borderColor: colors.border,
+                opacity: pressed ? 0.85 : 1,
+              },
+            ]}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 14,
-              }}
-            >
+            <View style={styles.menuCardLeft}>
               <View
-                style={{
-                  backgroundColor: colors.primary,
-                  padding: 12,
-                  borderRadius: 14,
-                }}
+                style={[
+                  styles.menuIconWrap,
+                  { backgroundColor: colors.primary },
+                ]}
               >
                 <Ionicons name={item.icon as any} size={22} color="white" />
               </View>
 
-              <Text
-                style={{
-                  fontSize: 17,
-                  fontWeight: "600",
-                  color: colors.text,
-                }}
-              >
+              <Text style={[styles.menuTitle, { color: colors.text }]}>
                 {item.title}
               </Text>
             </View>
@@ -127,3 +97,68 @@ export function HomeScreenComponent() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  content: {
+    padding: 20,
+    paddingBottom: 40,
+  },
+  header: {
+    marginBottom: 30,
+  },
+  greetingPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    alignSelf: "flex-start",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 999,
+    marginBottom: 12,
+  },
+  greetingText: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+  appName: {
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  description: {
+    marginTop: 6,
+    fontSize: 16,
+  },
+  menuList: {
+    flexDirection: "column",
+    gap: 16,
+  },
+  menuCard: {
+    borderRadius: 18,
+    padding: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 1,
+  },
+  menuCardLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+  },
+  menuIconWrap: {
+    padding: 12,
+    borderRadius: 14,
+  },
+  menuTitle: {
+    fontSize: 17,
+    fontWeight: "600",
+  },
+});

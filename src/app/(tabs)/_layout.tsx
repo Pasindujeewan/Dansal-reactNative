@@ -1,13 +1,18 @@
 import { useTheme } from "@/hooks/themeHook";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 export default function TabLayout() {
   const insert = useSafeAreaInsets();
   const { theme, colors, toggleTheme } = useTheme();
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
@@ -73,7 +78,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
+            title: t("common.home"),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="home" size={size} color={color} />
             ),
@@ -83,7 +88,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="Map"
           options={{
-            title: "Map",
+            title: t("common.map"),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="map" size={size} color={color} />
             ),
@@ -92,7 +97,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="Profile"
           options={{
-            title: "Profile",
+            title: t("common.profile"),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="person" size={size} color={color} />
             ),
@@ -101,7 +106,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="settings"
           options={{
-            title: "Settings",
+            title: t("common.settings"),
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="settings" size={size} color={color} />
             ),

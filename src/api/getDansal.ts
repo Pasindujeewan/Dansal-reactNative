@@ -1,4 +1,5 @@
 import { Region } from "react-native-maps";
+import { apiFetch } from "./apiFetch";
 
 export async function getDansal(region: Region) {
   const north = region.latitude + region.latitudeDelta / 2;
@@ -12,9 +13,13 @@ export async function getDansal(region: Region) {
     east: east.toString(),
     west: west.toString(),
   });
+  const controller = new AbortController();
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, 10000);
 
   try {
-    const res = await fetch(
+    const res = await apiFetch(
       `http://10.0.2.2:3000/api/dansals/get?${searchParams.toString()}`,
     );
     const data = await res.json();

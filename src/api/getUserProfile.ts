@@ -1,5 +1,6 @@
-import { refreshAccessToken } from "./refreshToken";
 import type { returnType } from "@/types/returnType";
+import { apiFetch } from "./apiFetch";
+import { refreshAccessToken } from "./refreshToken";
 
 type Props = {
   accessToken: string | null;
@@ -8,7 +9,7 @@ type Props = {
 
 export async function getUserProfile({ accessToken, refreshToken }: Props) {
   try {
-    const response = await fetch(`http://10.0.2.2:3000/api/user/profile`, {
+    const response = await apiFetch(`http://10.0.2.2:3000/api/user/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

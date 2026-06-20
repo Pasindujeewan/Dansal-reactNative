@@ -1,3 +1,5 @@
+import { apiFetch } from "./apiFetch";
+
 type Tokens = {
   accessToken: string;
   refreshToken: string;
@@ -7,7 +9,7 @@ export async function refreshAccessToken(
 ): Promise<Tokens> {
   console.log("Refreshing access token with refresh token:", refreshToken);
   try {
-    const response = await fetch(`http://10.0.2.2:3000/api/auth/refresh`, {
+    const response = await apiFetch(`http://10.0.2.2:3000/api/auth/refresh`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

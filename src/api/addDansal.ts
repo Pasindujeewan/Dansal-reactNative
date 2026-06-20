@@ -1,5 +1,6 @@
-import { refreshAccessToken } from "./refreshToken";
 import type { returnType } from "@/types/returnType";
+import { apiFetch } from "./apiFetch";
+import { refreshAccessToken } from "./refreshToken";
 type Props = {
   type: string;
   description: string;
@@ -19,12 +20,17 @@ export async function addDansal({
   accessToken,
   refreshToken,
 }: Props) {
+  const controller = new AbortController();
+
+  const timer = setTimeout(() => {
+    controller.abort();
+  }, 10000);
   try {
-    const res = await fetch("http://10.0.2.2:3000/api/dansals/add", {
+    const res = await apiFetch("http://10.0.2.2:3000/api/dansals/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         type,

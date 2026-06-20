@@ -1,3 +1,5 @@
+import { apiFetch } from "./apiFetch";
+
 type User = {
   name: string;
   email: string;
@@ -7,7 +9,7 @@ type User = {
 export async function registerUser({ name, email, password }: User) {
   try {
     console.log("Registering user...");
-    const res = await fetch(`http://10.0.2.2:3000/api/auth/register`, {
+    const res = await apiFetch(`http://10.0.2.2:3000/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

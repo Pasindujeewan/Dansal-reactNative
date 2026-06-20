@@ -1,0 +1,80 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "home": "Home",
+    "map": "Map",
+    "profile": "Profile",
+    "settings": "Settings",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "cancel": "Cancel",
+    "save": "Save",
+    "ok": "OK",
+    "yes": "Yes",
+    "no": "No",
+    "loading": "Loading...",
+    "search": "Search"
+  },
+
+  "homeScreen": {
+    "welcomeTitle": "Welcome to Dansal App!",
+    "appName": "Dansal App",
+    "description": "Find nearby dansals and events",
+    "findNearby": "Find Nearby Dansals",
+    "addDansal": "Add a New Dansal"
+  },
+
+  "profile": {
+    "guestMessage": "Please login or register to show profile info",
+    "loginButton": "Login",
+    "registerButton": "Register"
+  },
+
+  "navigation": {
+    "home": "Home",
+    "map": "Map",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "system": "System Default",
+    "notifications": "Notifications"
+  },
+
+  "language": {
+    "english": "English",
+    "sinhala": "සිංහල",
+    "selectLanguage": "Select Language"
+  },
+
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+
+  "alerts": {
+    "loginRequired": "Please login first.",
+    "networkError": "Network error. Please try again.",
+    "somethingWentWrong": "Something went wrong."
+  },
+
+  "toast": {
+    "dansalAdded": "Dansal added successfully.",
+    "dansalUpdated": "Dansal updated successfully.",
+    "saved": "Saved successfully."
+  },
+
+  "validation": {
+    "required": "This field is required.",
+    "invalidEmail": "Please enter a valid email.",
+    "passwordTooShort": "Password must be at least 6 characters."
+  }
+}

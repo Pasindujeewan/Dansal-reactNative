@@ -3,9 +3,9 @@
  * Purpose: Modal component to display success messages to the user.
  * Exports: default `SuccessAlert` component.
  */
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/hooks/themeHook";
+import { Ionicons } from "@expo/vector-icons";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 
 type Props = {
   visible: boolean;

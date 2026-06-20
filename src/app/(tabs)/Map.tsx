@@ -1,15 +1,18 @@
-import { Text, View, Alert } from "react-native";
-import MapView, { LatLng, Marker } from "react-native-maps";
-import { useState, useRef } from "react";
-import { MapPressEvent } from "react-native-maps";
+import { getDansal } from "@/api/getDansal";
+import { AddDansalForm } from "@/components/AddDansalForm";
+import { DansalBottomWindow } from "@/components/dansalBottomWindow";
 import MapAlert from "@/components/MapAlert";
 import { useTheme } from "@/hooks/themeHook";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { AddDansalForm } from "@/components/AddDansalForm";
-import { getDansal } from "@/api/getDansal";
-import { Region } from "react-native-maps";
 import { dansalShort } from "@/types/dansalType";
-import { DansalBottomWindow } from "@/components/dansalBottomWindow";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useRef, useState } from "react";
+import { Text, View } from "react-native";
+import MapView, {
+  LatLng,
+  MapPressEvent,
+  Marker,
+  Region,
+} from "react-native-maps";
 
 export default function MapScreen() {
   const [selected, setSelected] = useState<LatLng | null>(null);
