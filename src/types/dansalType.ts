@@ -12,6 +12,10 @@ export type dansal = {
   queueLength: number;
   imgUrl: string;
   location: [number, number];
+  updatedAt: string;
 };
 
-export type dansalShort = Pick<dansal, "id" | "type" | "location">;
+export type dansalShort = Pick<
+  dansal,
+  "id" | "type" | "location" | "updatedAt"
+>;

@@ -133,7 +133,10 @@ export default function ProfileScreen() {
         <Avatar name={user?.name ?? ""} size={72} />
 
         <View style={styles.userInfo}>
-          <Text style={[styles.name, { color: colors.headerText }]}>
+          <Text
+            style={[styles.name, { color: colors.headerText }]}
+            onPress={() => router.push("/Login")}
+          >
             {user?.name}
           </Text>
 

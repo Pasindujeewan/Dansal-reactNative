@@ -4,9 +4,15 @@ type User = {
   name: string;
   email: string;
   password: string;
+  notifyToken: string;
 };
 
-export async function registerUser({ name, email, password }: User) {
+export async function registerUser({
+  name,
+  email,
+  password,
+  notifyToken,
+}: User) {
   try {
     console.log("Registering user...");
     const res = await apiFetch(`http://10.0.2.2:3000/api/auth/register`, {
@@ -18,6 +24,7 @@ export async function registerUser({ name, email, password }: User) {
         name: name,
         email: email,
         password: password,
+        notifyToken: notifyToken,
       }),
     });
     const data = await res.json();

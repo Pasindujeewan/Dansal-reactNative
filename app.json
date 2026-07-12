@@ -7,18 +7,16 @@
     "icon": "./assets/images/logo.png",
     "scheme": "dansal",
     "userInterfaceStyle": "automatic",
-
     "android": {
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDIcPma3nCA5so9SIFHlaM0yME8EPxQAnA"
         }
       },
-
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.Dansal"
+      "package": "com.anonymous.Dansal",
+      "googleServicesFile": "./google-services.json"
     },
-
     "plugins": [
       "expo-router",
       [
@@ -31,11 +29,19 @@
           }
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-notifications"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "cc3ebf1b-7c56-42aa-8a51-6e1b16f15991"
+      }
+    },
+    "owner": "pasindusadun"
   }
 }

@@ -1,22 +1,23 @@
+import { registerUser } from "@/api/registerUser";
+import { ErrorAlert } from "@/components/errorAlert";
+import GlobalLoader from "@/components/LoadingScreen";
+import SuccessAlert from "@/components/sucsessAlert";
+import { useAuth } from "@/hooks/authHook";
+import { Ionicons } from "@expo/vector-icons";
+import * as Notifications from "expo-notifications";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  StyleSheet,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../hooks/themeHook";
-import { ErrorAlert } from "@/components/errorAlert";
-import { registerUser } from "@/api/registerUser";
-import GlobalLoader from "@/components/LoadingScreen";
-import { useAuth } from "@/hooks/authHook";
-import SuccessAlert from "@/components/sucsessAlert";
-import { router } from "expo-router";
 
 export default function RegisterScreen() {
   const { colors } = useTheme();
@@ -54,8 +55,9 @@ export default function RegisterScreen() {
         setErrorVisible(true);
         return;
       }
+      const notifyToken = (await Notifications.getExpoPushTokenAsync()).data;
 
-      const res = await registerUser({ name, email, password });
+      const res = await registerUser({ name, email, password, notifyToken });
       console.log("Registered user:", res.data.user);
       await login(res.data.user, res.token.refreshToken, res.token.accessToken);
       setIsSuccessVisible(true);

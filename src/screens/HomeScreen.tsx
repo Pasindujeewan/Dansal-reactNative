@@ -10,6 +10,7 @@ import { router } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { checkNearbyDansals } from "@/api/getNotification";
 
 export function HomeScreenComponent() {
   const { colors } = useTheme();
@@ -59,6 +60,9 @@ export function HomeScreenComponent() {
           {t("homeScreen.description")}
         </Text>
       </View>
+      <Pressable onPress={checkNearbyDansals}>
+        <Text>clicke me to get notify</Text>
+      </Pressable>
 
       {/* Menu Cards */}
       <View style={styles.menuList}>
