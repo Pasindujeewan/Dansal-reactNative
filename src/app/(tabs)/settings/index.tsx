@@ -20,7 +20,7 @@ import i18n from "../../../ii8n";
 export default function Settings() {
   const { colors, theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
-  const [language, setLanguage] = useState<"en" | "si">("en");
+  const [language, setLanguage] = useState<"en" | "si">("si");
 
   const changeLanguage = (lang: "en" | "si") => {
     i18n.changeLanguage(lang);

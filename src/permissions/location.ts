@@ -4,5 +4,6 @@ export async function askLocationpermission() {
   const { status } = await Location.requestForegroundPermissionsAsync();
 
   if (status !== "granted") return false;
-  return true;
+  const location = await Location.getCurrentPositionAsync({});
+  return location;
 }
