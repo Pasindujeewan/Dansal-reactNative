@@ -7,6 +7,7 @@ import { dansalShort } from "@/types/dansalType";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
+import { MapSideMenu } from "@/components/MapSideMenu";
 import MapView, {
   LatLng,
   MapPressEvent,
@@ -120,7 +121,7 @@ export default function MapScreen() {
           }}
         />
       )}
-
+      <MapSideMenu />
       {!showAlert && (
         <View
           style={{

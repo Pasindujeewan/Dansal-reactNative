@@ -76,5 +76,35 @@
     "required": "This field is required.",
     "invalidEmail": "Please enter a valid email.",
     "passwordTooShort": "Password must be at least 6 characters."
+  },
+  "search": {
+    "title": "Find a Dansal",
+    "dansalType": "Dansal Type",
+    "distance": "Distance",
+    "searchDansals": "Search Dansals",
+    "close": "Close",
+
+    "dansalTypes": {
+      "all": "All Dansals",
+      "bath": "Bath Dansal",
+      "riceCurry": "Rice & Curry Dansal",
+      "iceCream": "Ice Cream Dansal",
+      "paan": "Paan Dansal",
+      "teaDrinks": "Tea / Drinks Dansal",
+      "soup": "Soup Dansal",
+      "fruit": "Fruit Dansal",
+      "biscuit": "Biscuit Dansal",
+      "water": "Water Dansal",
+      "other": "Other"
+    },
+
+    "distances": {
+      "one": "Within 1 km",
+      "two": "Within 2 km",
+      "five": "Within 5 km",
+      "ten": "Within 10 km",
+      "twentyFive": "Within 25 km",
+      "fifty": "Within 50 km"
+    }
   }
 }
