@@ -52,7 +52,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 55,
     right: 15,
-    zIndex: 100,
+    zIndex: 1000,
+    pointerEvents: "box-none",
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
   },
 
   sideMenu: {

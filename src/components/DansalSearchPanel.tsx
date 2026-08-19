@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -8,6 +8,14 @@ import { useTranslation } from "react-i18next";
 
 export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
+
+  const [selectedDansalType, setSelectedDansalType] = useState("all");
+
+  const [selectedDistance, setSelectedDistance] = useState(5);
+
+  const [openDropdown, setOpenDropdown] = useState<
+    "dansalType" | "distance" | null
+  >(null);
 
   const dansalTypes = [
     {
@@ -83,82 +91,148 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
     },
   ];
 
+  const selectedDansalTypeName = dansalTypes.find(
+    (item) => item.value === selectedDansalType,
+  )?.displayName;
+
+  const selectedDistanceName = distances.find(
+    (item) => item.value === selectedDistance,
+  )?.displayName;
+
+  const toggleDropdown = (dropdown: "dansalType" | "distance") => {
+    setOpenDropdown((current) => (current === dropdown ? null : dropdown));
+  };
+
   return (
     <View style={styles.searchPanel}>
-      {/* Header */}
+      {/* ============================= */}
+      {/* HEADER */}
+      {/* ============================= */}
+
       <View style={styles.header}>
         <Text style={styles.title}>{t("search.title")}</Text>
 
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+        <TouchableOpacity
+          style={styles.closeButton}
+          onPress={onClose}
+          activeOpacity={0.7}
+        >
           <X size={20} color="#555" />
         </TouchableOpacity>
       </View>
 
-      {/* ================================= */}
+      {/* ============================= */}
       {/* DANSAL TYPE */}
-      {/* ================================= */}
+      {/* ============================= */}
 
       <Text style={styles.label}>{t("search.dansalType")}</Text>
 
-      {/* Selected value */}
-      <TouchableOpacity style={styles.selectBox}>
-        <Text style={styles.selectedText}>{dansalTypes[0].displayName}</Text>
+      <TouchableOpacity
+        style={styles.selectBox}
+        activeOpacity={0.7}
+        onPress={() => toggleDropdown("dansalType")}
+      >
+        <Text style={styles.selectText}>{selectedDansalTypeName}</Text>
 
-        <ChevronDown size={20} color="#666" />
+        <ChevronDown size={18} color="#777" />
       </TouchableOpacity>
 
-      {/* Dansal Type Dropdown */}
-      <View style={styles.dropdown}>
-        {dansalTypes.map((type, index) => (
-          <TouchableOpacity key={type.value} style={styles.dropdownItem}>
-            <Text
-              style={[
-                styles.dropdownText,
+      {openDropdown === "dansalType" && (
+        <View style={styles.dropdown}>
+          {dansalTypes.map((type) => {
+            const isSelected = selectedDansalType === type.value;
 
-                index === 0 && styles.selectedDropdownText,
-              ]}
-            >
-              {type.displayName}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+            return (
+              <TouchableOpacity
+                key={type.value}
+                style={[
+                  styles.dropdownItem,
+                  isSelected && styles.selectedDropdownItem,
+                ]}
+                activeOpacity={0.7}
+                onPress={() => {
+                  setSelectedDansalType(type.value);
+                  setOpenDropdown(null);
+                }}
+              >
+                <Text
+                  style={[
+                    styles.dropdownText,
+                    isSelected && styles.selectedDropdownText,
+                  ]}
+                >
+                  {type.displayName}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
 
-      {/* ================================= */}
+      {/* ============================= */}
       {/* DISTANCE */}
-      {/* ================================= */}
+      {/* ============================= */}
 
       <Text style={styles.label}>{t("search.distance")}</Text>
 
-      {/* Selected value */}
-      <TouchableOpacity style={styles.selectBox}>
-        <Text style={styles.selectedText}>{distances[2].displayName}</Text>
+      <TouchableOpacity
+        style={styles.selectBox}
+        activeOpacity={0.7}
+        onPress={() => toggleDropdown("distance")}
+      >
+        <Text style={styles.selectText}>{selectedDistanceName}</Text>
 
-        <ChevronDown size={20} color="#666" />
+        <ChevronDown size={18} color="#777" />
       </TouchableOpacity>
 
-      {/* Distance Dropdown */}
-      <View style={styles.dropdown}>
-        {distances.map((distance, index) => (
-          <TouchableOpacity key={distance.value} style={styles.dropdownItem}>
-            <Text
-              style={[
-                styles.dropdownText,
+      {openDropdown === "distance" && (
+        <View style={styles.dropdown}>
+          {distances.map((distance) => {
+            const isSelected = selectedDistance === distance.value;
 
-                index === 2 && styles.selectedDropdownText,
-              ]}
-            >
-              {distance.displayName}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+            return (
+              <TouchableOpacity
+                key={distance.value}
+                style={[
+                  styles.dropdownItem,
+                  isSelected && styles.selectedDropdownItem,
+                ]}
+                activeOpacity={0.7}
+                onPress={() => {
+                  setSelectedDistance(distance.value);
+                  setOpenDropdown(null);
+                }}
+              >
+                <Text
+                  style={[
+                    styles.dropdownText,
+                    isSelected && styles.selectedDropdownText,
+                  ]}
+                >
+                  {distance.displayName}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
 
-      {/* ================================= */}
+      {/* ============================= */}
       {/* SEARCH BUTTON */}
-      {/* ================================= */}
+      {/* ============================= */}
 
-      <TouchableOpacity style={styles.searchButton}>
+      <TouchableOpacity
+        style={styles.searchButton}
+        activeOpacity={0.8}
+        onPress={() => {
+          console.log({
+            dansalType: selectedDansalType,
+            distance: selectedDistance,
+          });
+
+          setOpenDropdown(null);
+        }}
+      >
         <Search size={19} color="#fff" />
 
         <Text style={styles.searchButtonText}>{t("search.searchDansals")}</Text>
@@ -169,14 +243,6 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
 
 const styles = StyleSheet.create({
   searchPanel: {
-    position: "absolute",
-
-    zIndex: 1000,
-
-    right: 20,
-
-    top: 20,
-
     width: 290,
 
     backgroundColor: "#fff",
@@ -185,21 +251,13 @@ const styles = StyleSheet.create({
 
     padding: 16,
 
-    elevation: 8,
-
-    shadowColor: "#000",
-
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-
-    shadowOpacity: 0.18,
-
-    shadowRadius: 12,
+    zIndex: 2000,
+    elevation: 20,
   },
 
-  /* Header */
+  /* ============================= */
+  /* HEADER */
+  /* ============================= */
 
   header: {
     flexDirection: "row",
@@ -233,7 +291,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
 
-  /* Label */
+  /* ============================= */
+  /* LABEL */
+  /* ============================= */
 
   label: {
     fontSize: 13,
@@ -242,23 +302,25 @@ const styles = StyleSheet.create({
 
     color: "#444",
 
-    marginBottom: 7,
-
     marginTop: 10,
+
+    marginBottom: 7,
   },
 
-  /* Select box */
+  /* ============================= */
+  /* SELECT */
+  /* ============================= */
 
   selectBox: {
-    height: 46,
+    height: 44,
 
     borderWidth: 1,
 
-    borderColor: "#e0e0e0",
+    borderColor: "#e5e5e5",
 
-    borderRadius: 11,
+    borderRadius: 10,
 
-    paddingHorizontal: 13,
+    paddingHorizontal: 12,
 
     flexDirection: "row",
 
@@ -266,31 +328,35 @@ const styles = StyleSheet.create({
 
     justifyContent: "space-between",
 
-    backgroundColor: "#fafafa",
+    backgroundColor: "#fff",
   },
 
-  selectedText: {
+  selectText: {
+    flex: 1,
+
     fontSize: 14,
 
     color: "#333",
-
-    fontWeight: "500",
-
-    flex: 1,
   },
 
-  /* Dropdown */
+  /* ============================= */
+  /* DROPDOWN */
+  /* ============================= */
 
   dropdown: {
-    marginTop: 5,
-
-    borderRadius: 11,
-
-    backgroundColor: "#fff",
+    marginTop: 4,
 
     borderWidth: 1,
 
-    borderColor: "#eee",
+    borderColor: "#e5e5e5",
+
+    borderRadius: 10,
+
+    backgroundColor: "#fff",
+
+    overflow: "hidden",
+
+    maxHeight: 180,
 
     elevation: 5,
 
@@ -298,32 +364,28 @@ const styles = StyleSheet.create({
 
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 2,
     },
 
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.1,
 
-    shadowRadius: 6,
-
-    maxHeight: 180,
-
-    overflow: "hidden",
+    shadowRadius: 5,
   },
 
   dropdownItem: {
-    paddingVertical: 9,
+    paddingHorizontal: 12,
 
-    paddingHorizontal: 13,
+    paddingVertical: 10,
+  },
 
-    borderBottomWidth: 1,
-
-    borderBottomColor: "#f2f2f2",
+  selectedDropdownItem: {
+    backgroundColor: "#fff4eb",
   },
 
   dropdownText: {
-    fontSize: 12,
+    fontSize: 13,
 
-    color: "#555",
+    color: "#444",
   },
 
   selectedDropdownText: {
@@ -332,7 +394,9 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  /* Search button */
+  /* ============================= */
+  /* SEARCH */
+  /* ============================= */
 
   searchButton: {
     height: 46,

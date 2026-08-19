@@ -121,7 +121,6 @@ export default function MapScreen() {
           }}
         />
       )}
-      <MapSideMenu />
       {!showAlert && (
         <View
           style={{
@@ -204,6 +203,7 @@ export default function MapScreen() {
           />
         ))}
       </MapView>
+      <MapSideMenu />
     </View>
   );
 }
