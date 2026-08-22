@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ChevronDown, Search, X } from "lucide-react-native";
 
 import { useTranslation } from "react-i18next";
+import { searchDansal } from "@/api/searchDansal";
 
 export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
       displayName: t("search.dansalTypes.all"),
     },
     {
-      value: "bath",
+      value: "z",
       displayName: t("search.dansalTypes.bath"),
     },
     {
@@ -101,6 +102,17 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
 
   const toggleDropdown = (dropdown: "dansalType" | "distance") => {
     setOpenDropdown((current) => (current === dropdown ? null : dropdown));
+  };
+  const handleSearch = async () => {
+    try {
+      const result = await searchDansal({
+        type: selectedDansalType,
+        distance: selectedDistance,
+      });
+      console.log("Search result:s", result);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -225,10 +237,7 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
         style={styles.searchButton}
         activeOpacity={0.8}
         onPress={() => {
-          console.log({
-            dansalType: selectedDansalType,
-            distance: selectedDistance,
-          });
+          handleSearch();
 
           setOpenDropdown(null);
         }}

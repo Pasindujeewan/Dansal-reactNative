@@ -140,7 +140,7 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
 
         justifyContent: "center",
 
-        zIndex: 9,
+        zIndex: 10000,
       }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >

@@ -5,5 +5,5 @@ export async function askLocationpermission() {
 
   if (status !== "granted") return false;
   const location = await Location.getCurrentPositionAsync({});
-  return location;
+  return location.coords;
 }
