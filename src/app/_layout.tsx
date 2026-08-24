@@ -4,30 +4,33 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { DansalContexProvider } from "@/context/dansal.context";
 import "./../ii8n";
 export default function TabLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthProvider>
-        <ThemeProvider>
-          <SafeAreaProvider>
-            <StatusBar style="auto" />
-            <Stack>
-              <Stack.Screen
-                name="(tabs)"
-                options={{ title: "Home", headerShown: false }}
-              />
-              <Stack.Screen
-                name="Login"
-                options={{ title: "Login", headerShown: true }}
-              />
-              <Stack.Screen
-                name="Register"
-                options={{ title: "Register", headerShown: true }}
-              />
-            </Stack>
-          </SafeAreaProvider>
-        </ThemeProvider>
+        <DansalContexProvider>
+          <ThemeProvider>
+            <SafeAreaProvider>
+              <StatusBar style="auto" />
+              <Stack>
+                <Stack.Screen
+                  name="(tabs)"
+                  options={{ title: "Home", headerShown: false }}
+                />
+                <Stack.Screen
+                  name="Login"
+                  options={{ title: "Login", headerShown: true }}
+                />
+                <Stack.Screen
+                  name="Register"
+                  options={{ title: "Register", headerShown: true }}
+                />
+              </Stack>
+            </SafeAreaProvider>
+          </ThemeProvider>
+        </DansalContexProvider>
       </AuthProvider>
     </GestureHandlerRootView>
   );

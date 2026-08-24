@@ -6,8 +6,11 @@ import { ChevronDown, Search, X } from "lucide-react-native";
 
 import { useTranslation } from "react-i18next";
 import { searchDansal } from "@/api/searchDansal";
+import { useDansalContext } from "@/hooks/dansalHook";
 
 export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
+  const { setSearchDansal, setMode } = useDansalContext();
+
   const { t } = useTranslation();
 
   const [selectedDansalType, setSelectedDansalType] = useState("all");
@@ -103,15 +106,20 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
   const toggleDropdown = (dropdown: "dansalType" | "distance") => {
     setOpenDropdown((current) => (current === dropdown ? null : dropdown));
   };
+
   const handleSearch = async () => {
     try {
       const result = await searchDansal({
         type: selectedDansalType,
         distance: selectedDistance,
       });
-      console.log("Search result:s", result);
+      console.log("Search result:s", result.data.dansals);
+      setSearchDansal(result.data.dansals);
+      setMode("search");
     } catch (error) {
       console.log(error);
+    } finally {
+      onClose();
     }
   };
 

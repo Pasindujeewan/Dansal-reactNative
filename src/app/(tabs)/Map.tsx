@@ -8,14 +8,21 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 import { MapSideMenu } from "@/components/MapSideMenu";
+import { MapPin } from "lucide-react-native";
+import { MapSearchAlert } from "@/components/MapSearchAlert";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import MapView, {
   LatLng,
   MapPressEvent,
   Marker,
   Region,
 } from "react-native-maps";
+import { useDansalContext } from "@/hooks/dansalHook";
 
 export default function MapScreen() {
+  const { searchDansal, mode, setMode, setSearchDansal } = useDansalContext();
+
   const [selected, setSelected] = useState<LatLng | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -112,6 +119,7 @@ export default function MapScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      <MapSearchAlert />
       {showForm && (
         <AddDansalForm
           cordinate={selected}
@@ -120,30 +128,6 @@ export default function MapScreen() {
             setShowForm(false);
           }}
         />
-      )}
-      {!showAlert && (
-        <View
-          style={{
-            backgroundColor: colors.warning,
-            paddingHorizontal: 12,
-            paddingVertical: 10,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text
-            style={{
-              flex: 1,
-              fontSize: 14,
-              fontWeight: "500",
-              marginRight: 8,
-            }}
-          >
-            දන්සල ඇතුලත් කිරීමට අදාල ස්ථානය මාර්ක් කරන්නA
-          </Text>
-          <Ionicons name="close-circle" size={22} color={"black"} />
-        </View>
       )}
 
       <MapAlert
@@ -172,14 +156,6 @@ export default function MapScreen() {
         }}
         onPress={handleMapPress}
       >
-        <Marker
-          coordinate={{ latitude: 6.9271, longitude: 79.8612 }}
-          title="Colombo"
-          description="Capital of Sri Lanka"
-          onPress={(event) => {
-            event.stopPropagation();
-          }}
-        />
         {selected && (
           <Marker
             coordinate={selected}
@@ -187,21 +163,47 @@ export default function MapScreen() {
             description="Selected place"
           />
         )}
-        {markers.map((marker) => (
-          <Marker
-            onPress={(event) => {
-              event.stopPropagation();
-              handleDansalPress(marker);
-            }}
-            key={marker.id}
-            coordinate={{
-              latitude: marker.location[1],
-              longitude: marker.location[0],
-            }}
-            title={marker.type}
-            description="Dansal"
-          />
-        ))}
+        {mode === "search"
+          ? searchDansal.length > 0 &&
+            searchDansal.map((marker) => (
+              <Marker
+                key={marker.id}
+                coordinate={{
+                  latitude: marker.location[1],
+                  longitude: marker.location[0],
+                }}
+                title={marker.type}
+                description="Dansal"
+              >
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={35}
+                  color="orange"
+                />
+              </Marker>
+            ))
+          : markers.map((marker) => (
+              <Marker
+                onPress={(event) => {
+                  event.stopPropagation();
+                  handleDansalPress(marker);
+                }}
+                key={marker.id}
+                coordinate={{
+                  latitude: marker.location[1],
+                  longitude: marker.location[0],
+                }}
+                title={marker.type}
+                description="Dansal"
+              >
+                <MaterialCommunityIcons
+                  name="map-marker"
+                  size={35}
+                  color="red"
+                />
+              </Marker>
+            ))}
+        {}
       </MapView>
       <MapSideMenu />
     </View>

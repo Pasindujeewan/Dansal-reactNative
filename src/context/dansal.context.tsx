@@ -14,6 +14,8 @@ export function DansalContexProvider({ children }: { children: ReactNode }) {
   const [searchDansal, setSearchDansal] = useState<dansalShort[]>([]);
   const [allDansal, setAllDansal] = useState<dansalShort[]>([]);
   const [mode, setMode] = useState<"search" | "all">("search");
+  console.log("searchDansal in context:", searchDansal);
+  console.log("mode in context:", mode);
   return (
     <DansalContext.Provider
       value={{
