@@ -11,6 +11,7 @@ import { MapSideMenu } from "@/components/MapSideMenu";
 import { MapPin } from "lucide-react-native";
 import { MapSearchAlert } from "@/components/MapSearchAlert";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { getDansalColor } from "@/utilis/getDansalColur";
 
 import MapView, {
   LatLng,
@@ -21,7 +22,7 @@ import MapView, {
 import { useDansalContext } from "@/hooks/dansalHook";
 
 export default function MapScreen() {
-  const { searchDansal, mode, setMode, setSearchDansal } = useDansalContext();
+  const { searchDansal, mode } = useDansalContext();
 
   const [selected, setSelected] = useState<LatLng | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -36,6 +37,8 @@ export default function MapScreen() {
 
   const lastRegionRef = useRef<Region | null>(null);
   const tileSyncRef = useRef<Record<string, string>>({});
+
+  const mapRef = useRef<MapView | null>(null);
 
   function mergeDansalMarkers(
     currentMarkers: dansalShort[],
@@ -59,6 +62,14 @@ export default function MapScreen() {
   }
 
   function handleDansalPress(dansal: dansalShort) {
+    if (mapRef.current) {
+      mapRef.current.animateToRegion({
+        latitude: dansal.location[1],
+        longitude: dansal.location[0],
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+    }
     setSelected(null);
     setShowAlert(false);
     setSelectedDansal(dansal);
@@ -110,7 +121,9 @@ export default function MapScreen() {
         setMarkers((currentMarkers) =>
           mergeDansalMarkers(currentMarkers, res.dansals),
         );
+        console.log("markers after merging:", markers);
         console.log("Fetched dansals:", res.dansals);
+        console.log("current mode", mode);
       }
     } catch (error) {
       console.error("Error fetching dansals:", error);
@@ -155,6 +168,7 @@ export default function MapScreen() {
           longitudeDelta: 0.05,
         }}
         onPress={handleMapPress}
+        ref={mapRef}
       >
         {selected && (
           <Marker
@@ -168,6 +182,10 @@ export default function MapScreen() {
             searchDansal.map((marker) => (
               <Marker
                 key={marker.id}
+                onPress={(event) => {
+                  event.stopPropagation();
+                  handleDansalPress(marker);
+                }}
                 coordinate={{
                   latitude: marker.location[1],
                   longitude: marker.location[0],
@@ -178,7 +196,7 @@ export default function MapScreen() {
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={35}
-                  color="orange"
+                  color={getDansalColor(marker.type)}
                 />
               </Marker>
             ))
@@ -199,11 +217,10 @@ export default function MapScreen() {
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={35}
-                  color="red"
+                  color={getDansalColor(marker.type)}
                 />
               </Marker>
             ))}
-        {}
       </MapView>
       <MapSideMenu />
     </View>

@@ -100,20 +100,9 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
-      console.log("Login Sckips", res.newTokens);
-      if (
-        res.newTokens?.accessToken !== accessToken ||
-        res.newTokens.refreshToken !== refreshToken
-      ) {
-        console.log("Login happen");
-        await login(
-          user!,
-          res.newTokens.refreshToken,
-          res.newTokens.accessToken,
-        );
-        setSuccessMessage("දන්සල සාර්ථකව ඇතුලත් කරන ලදි!");
-        setIsSuccessVisible(true);
-      }
+
+      setSuccessMessage("දන්සල සාර්ථකව ඇතුලත් කරන ලදි!");
+      setIsSuccessVisible(true);
     } catch (error) {
       console.log(error);
       if (error instanceof Error) {
