@@ -190,13 +190,13 @@ export default function MapScreen() {
                   latitude: marker.location[1],
                   longitude: marker.location[0],
                 }}
-                title={marker.type}
+                title={marker.label}
                 description="Dansal"
               >
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={35}
-                  color={getDansalColor(marker.type)}
+                  color={getDansalColor(marker.value)}
                 />
               </Marker>
             ))
@@ -211,13 +211,13 @@ export default function MapScreen() {
                   latitude: marker.location[1],
                   longitude: marker.location[0],
                 }}
-                title={marker.type}
+                title={marker.label}
                 description="Dansal"
               >
                 <MaterialCommunityIcons
                   name="map-marker"
                   size={35}
-                  color={getDansalColor(marker.type)}
+                  color={getDansalColor(marker.value)}
                 />
               </Marker>
             ))}

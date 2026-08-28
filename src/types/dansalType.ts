@@ -6,7 +6,8 @@ import type { user } from "./userType";
 
 export type dansal = {
   id: string;
-  type: string;
+  label: string;
+  value: string;
   description: string;
   createdBy: user["id"];
   queueLength: number;
@@ -17,5 +18,5 @@ export type dansal = {
 
 export type dansalShort = Pick<
   dansal,
-  "id" | "type" | "location" | "updatedAt"
+  "id" | "label" | "value" | "location" | "updatedAt"
 >;
