@@ -1,33 +1,48 @@
 export function getDansalColor(type: string) {
   switch (type) {
-    case "Bath":
+    case "bath":
       return "blue";
 
-    case "Rice & Curry":
+    case "rice_curry":
       return "green";
 
-    case "Ice Cream":
+    case "ice_cream":
       return "pink";
 
-    case "Paan":
+    case "paan":
       return "purple";
 
-    case "Tea/Drinks":
+    case "tea_drinks":
       return "orange";
 
-    case "Soup":
+    case "soup":
       return "red";
 
-    case "Fruit":
+    case "fruit":
       return "yellow";
 
-    case "Biscuit":
+    case "biscuit":
       return "brown";
 
-    case "Water":
-      return "cyan";
+    case "beema":
+      return "gold";
 
-    case "Other":
+    case "belimal":
+      return "orange";
+
+    case "milk":
+      return "white";
+
+    case "kos":
+      return "green";
+
+    case "mannokka":
+      return "orange";
+
+    case "sawu":
+      return "purple";
+
+    case "other":
       return "gray";
 
     default:

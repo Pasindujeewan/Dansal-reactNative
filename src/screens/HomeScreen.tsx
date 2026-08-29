@@ -60,9 +60,6 @@ export function HomeScreenComponent() {
           {t("homeScreen.description")}
         </Text>
       </View>
-      <Pressable onPress={checkNearbyDansals}>
-        <Text>clicke me to get notify</Text>
-      </Pressable>
 
       {/* Menu Cards */}
       <View style={styles.menuList}>

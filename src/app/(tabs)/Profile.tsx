@@ -200,7 +200,7 @@ export default function ProfileScreen() {
                   />
                 </View>
                 <Text style={[styles.dansalType, { color: colors.primary }]}>
-                  {dansal.type}
+                  {dansal.label}
                 </Text>
               </View>
 

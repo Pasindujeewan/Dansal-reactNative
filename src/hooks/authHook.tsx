@@ -71,13 +71,13 @@ export default function AuthProvider({
         await logout();
       }
     } catch (error) {
+      await logout();
       if (error instanceof Error) {
         setError(error.message);
       } else {
         setError("An unknown error occurred");
       }
       setShowError(true);
-      console.log("error LIke thisA", error);
     } finally {
       setLoading(false);
     }

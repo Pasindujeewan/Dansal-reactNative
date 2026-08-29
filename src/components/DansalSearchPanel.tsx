@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 
 import { ChevronDown, Search, X } from "lucide-react-native";
 
@@ -27,7 +33,7 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
       displayName: t("search.dansalTypes.all"),
     },
     {
-      value: "z",
+      value: "bath",
       displayName: t("search.dansalTypes.bath"),
     },
     {
@@ -59,8 +65,28 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
       displayName: t("search.dansalTypes.biscuit"),
     },
     {
-      value: "water",
-      displayName: t("search.dansalTypes.water"),
+      value: "beema",
+      displayName: t("search.dansalTypes.beema"),
+    },
+    {
+      value: "belimal",
+      displayName: t("search.dansalTypes.belimal"),
+    },
+    {
+      value: "milk",
+      displayName: t("search.dansalTypes.milk"),
+    },
+    {
+      value: "kos",
+      displayName: t("search.dansalTypes.kos"),
+    },
+    {
+      value: "mannokka",
+      displayName: t("search.dansalTypes.mannokka"),
+    },
+    {
+      value: "sawu",
+      displayName: t("search.dansalTypes.sawu"),
     },
     {
       value: "other",
@@ -125,10 +151,6 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <View style={styles.searchPanel}>
-      {/* ============================= */}
-      {/* HEADER */}
-      {/* ============================= */}
-
       <View style={styles.header}>
         <Text style={styles.title}>{t("search.title")}</Text>
 
@@ -140,10 +162,6 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
           <X size={20} color="#555" />
         </TouchableOpacity>
       </View>
-
-      {/* ============================= */}
-      {/* DANSAL TYPE */}
-      {/* ============================= */}
 
       <Text style={styles.label}>{t("search.dansalType")}</Text>
 
@@ -158,40 +176,38 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
       </TouchableOpacity>
 
       {openDropdown === "dansalType" && (
-        <View style={styles.dropdown}>
-          {dansalTypes.map((type) => {
-            const isSelected = selectedDansalType === type.value;
+        <View style={styles.dansalDropdown}>
+          <ScrollView nestedScrollEnabled showsVerticalScrollIndicator>
+            {dansalTypes.map((type) => {
+              const isSelected = selectedDansalType === type.value;
 
-            return (
-              <TouchableOpacity
-                key={type.value}
-                style={[
-                  styles.dropdownItem,
-                  isSelected && styles.selectedDropdownItem,
-                ]}
-                activeOpacity={0.7}
-                onPress={() => {
-                  setSelectedDansalType(type.value);
-                  setOpenDropdown(null);
-                }}
-              >
-                <Text
+              return (
+                <TouchableOpacity
+                  key={type.value}
                   style={[
-                    styles.dropdownText,
-                    isSelected && styles.selectedDropdownText,
+                    styles.dropdownItem,
+                    isSelected && styles.selectedDropdownItem,
                   ]}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    setSelectedDansalType(type.value);
+                    setOpenDropdown(null);
+                  }}
                 >
-                  {type.displayName}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+                  <Text
+                    style={[
+                      styles.dropdownText,
+                      isSelected && styles.selectedDropdownText,
+                    ]}
+                  >
+                    {type.displayName}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
         </View>
       )}
-
-      {/* ============================= */}
-      {/* DISTANCE */}
-      {/* ============================= */}
 
       <Text style={styles.label}>{t("search.distance")}</Text>
 
@@ -206,40 +222,38 @@ export const DansalSearchPanel = ({ onClose }: { onClose: () => void }) => {
       </TouchableOpacity>
 
       {openDropdown === "distance" && (
-        <View style={styles.dropdown}>
-          {distances.map((distance) => {
-            const isSelected = selectedDistance === distance.value;
+        <View style={styles.distanceDropdown}>
+          <ScrollView nestedScrollEnabled showsVerticalScrollIndicator>
+            {distances.map((distance) => {
+              const isSelected = selectedDistance === distance.value;
 
-            return (
-              <TouchableOpacity
-                key={distance.value}
-                style={[
-                  styles.dropdownItem,
-                  isSelected && styles.selectedDropdownItem,
-                ]}
-                activeOpacity={0.7}
-                onPress={() => {
-                  setSelectedDistance(distance.value);
-                  setOpenDropdown(null);
-                }}
-              >
-                <Text
+              return (
+                <TouchableOpacity
+                  key={distance.value}
                   style={[
-                    styles.dropdownText,
-                    isSelected && styles.selectedDropdownText,
+                    styles.dropdownItem,
+                    isSelected && styles.selectedDropdownItem,
                   ]}
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    setSelectedDistance(distance.value);
+                    setOpenDropdown(null);
+                  }}
                 >
-                  {distance.displayName}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+                  <Text
+                    style={[
+                      styles.dropdownText,
+                      isSelected && styles.selectedDropdownText,
+                    ]}
+                  >
+                    {distance.displayName}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
         </View>
       )}
-
-      {/* ============================= */}
-      {/* SEARCH BUTTON */}
-      {/* ============================= */}
 
       <TouchableOpacity
         style={styles.searchButton}
@@ -271,10 +285,6 @@ const styles = StyleSheet.create({
     zIndex: 2000,
     elevation: 20,
   },
-
-  /* ============================= */
-  /* HEADER */
-  /* ============================= */
 
   header: {
     flexDirection: "row",
@@ -308,10 +318,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
 
-  /* ============================= */
-  /* LABEL */
-  /* ============================= */
-
   label: {
     fontSize: 13,
 
@@ -324,11 +330,8 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
 
-  /* ============================= */
-  /* SELECT */
-  /* ============================= */
-
   selectBox: {
+    position: "relative",
     height: 44,
 
     borderWidth: 1,
@@ -356,36 +359,47 @@ const styles = StyleSheet.create({
     color: "#333",
   },
 
-  /* ============================= */
-  /* DROPDOWN */
-  /* ============================= */
-
-  dropdown: {
-    marginTop: 4,
-
-    borderWidth: 1,
-
-    borderColor: "#e5e5e5",
-
-    borderRadius: 10,
-
-    backgroundColor: "#fff",
-
-    overflow: "hidden",
-
+  dansalDropdown: {
+    position: "absolute",
+    top: 105,
+    left: 16,
+    right: 16,
     maxHeight: 180,
-
-    elevation: 5,
-
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    overflow: "hidden",
+    elevation: 10,
+    zIndex: 3000,
     shadowColor: "#000",
-
     shadowOffset: {
       width: 0,
       height: 2,
     },
-
     shadowOpacity: 0.1,
+    shadowRadius: 5,
+  },
 
+  distanceDropdown: {
+    position: "absolute",
+    top: 195,
+    left: 16,
+    right: 16,
+    maxHeight: 180,
+    borderWidth: 1,
+    borderColor: "#e5e5e5",
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    overflow: "hidden",
+    elevation: 10,
+    zIndex: 3000,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
     shadowRadius: 5,
   },
 
@@ -410,10 +424,6 @@ const styles = StyleSheet.create({
 
     fontWeight: "600",
   },
-
-  /* ============================= */
-  /* SEARCH */
-  /* ============================= */
 
   searchButton: {
     height: 46,
