@@ -22,7 +22,7 @@ import MapView, {
 import { useDansalContext } from "@/hooks/dansalHook";
 
 export default function MapScreen() {
-  const { searchDansal, mode } = useDansalContext();
+  const { searchDansal, mode, allDansal, fetchDansal } = useDansalContext();
 
   const [selected, setSelected] = useState<LatLng | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -35,31 +35,7 @@ export default function MapScreen() {
 
   const { colors } = useTheme();
 
-  const lastRegionRef = useRef<Region | null>(null);
-  const tileSyncRef = useRef<Record<string, string>>({});
-
   const mapRef = useRef<MapView | null>(null);
-
-  function mergeDansalMarkers(
-    currentMarkers: dansalShort[],
-    newMarkers: dansalShort[],
-  ) {
-    const markersById = new Map(
-      currentMarkers.map((marker) => [marker.id, marker]),
-    );
-
-    newMarkers.forEach((marker) => {
-      markersById.set(marker.id, marker);
-    });
-
-    return Array.from(markersById.values());
-  }
-
-  function saveSyncedTiles(syncedTiles: SyncedMapTile[] = []) {
-    syncedTiles.forEach(({ tileKey, syncedAt }) => {
-      tileSyncRef.current[tileKey] = syncedAt;
-    });
-  }
 
   function handleDansalPress(dansal: dansalShort) {
     if (mapRef.current) {
@@ -84,50 +60,8 @@ export default function MapScreen() {
     setShowForm(false);
     setisDansalVisible(false);
   }
-
-  async function handleGetDansal(region: Region) {
-    try {
-      if (!lastRegionRef.current) {
-        lastRegionRef.current = region;
-        const res = await getDansal(region, tileSyncRef.current);
-        saveSyncedTiles(res.syncedTiles);
-        setMarkers(res.dansals);
-        console.log("Fetched dansals:", res.dansals);
-        return;
-      }
-      const latDiff = Math.abs(
-        region.latitude - lastRegionRef.current.latitude,
-      );
-
-      const lngDiff = Math.abs(
-        region.longitude - lastRegionRef.current.longitude,
-      );
-      const latDeltaDiff = Math.abs(
-        region.latitudeDelta - lastRegionRef.current.latitudeDelta,
-      );
-      const lngDeltaDiff = Math.abs(
-        region.longitudeDelta - lastRegionRef.current.longitudeDelta,
-      );
-
-      if (
-        latDiff > 0.01 ||
-        lngDiff > 0.01 ||
-        latDeltaDiff > 0.01 ||
-        lngDeltaDiff > 0.01
-      ) {
-        lastRegionRef.current = region;
-        const res = await getDansal(region, tileSyncRef.current);
-        saveSyncedTiles(res.syncedTiles);
-        setMarkers((currentMarkers) =>
-          mergeDansalMarkers(currentMarkers, res.dansals),
-        );
-        console.log("markers after merging:", markers);
-        console.log("Fetched dansals:", res.dansals);
-        console.log("current mode", mode);
-      }
-    } catch (error) {
-      console.error("Error fetching dansals:", error);
-    }
+  function handleGetDansal(region: Region) {
+    fetchDansal(region);
   }
 
   return (
@@ -200,7 +134,7 @@ export default function MapScreen() {
                 />
               </Marker>
             ))
-          : markers.map((marker) => (
+          : allDansal.map((marker) => (
               <Marker
                 onPress={(event) => {
                   event.stopPropagation();

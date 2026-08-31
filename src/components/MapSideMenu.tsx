@@ -12,6 +12,7 @@ import {
 
 export const MapSideMenu = () => {
   const [isSearchPanelVisible, setIsSearchPanelVisible] = useState(false);
+
   return (
     <View style={styles.container}>
       {/* Top menu */}
@@ -31,11 +32,6 @@ export const MapSideMenu = () => {
         {/* Current location */}
         <TouchableOpacity style={styles.iconButton}>
           <Navigation size={21} color="#ff7a00" />
-        </TouchableOpacity>
-
-        {/* Search radius */}
-        <TouchableOpacity style={styles.iconButton}>
-          <SlidersHorizontal size={21} color="#333" />
         </TouchableOpacity>
 
         {/* Profile */}
