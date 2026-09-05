@@ -90,7 +90,10 @@ export function AddDansalForm({ cordinate, onClose }: Props) {
     try {
       setIsLoading(true);
       console.log("Saving dansal with data:", form, cordinate);
-      const url = await getUrl({ image });
+      const url = null;
+      if (!image) {
+        const url = await getUrl({ image });
+      }
       const res = await addDansal({
         type: form.type,
         description: form.description,
