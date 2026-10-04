@@ -1,56 +1,170 @@
-# Welcome to your Expo app 👋
+# Dansal Finder – Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A location-based mobile application built with **React Native and Expo** to help users discover and explore Dansal locations across Sri Lanka during Vesak and Poya seasons.
 
-## Get started
+The application provides an interactive map experience, allowing users to find nearby Dansals, explore different categories, and add new locations.
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+* **Interactive Map:** Explore Dansal locations through a map-based interface.
+* **Location-Based Search:** Discover Dansals around the current location.
+* **Category Filtering:** Filter locations by Dansal types such as rice and curry, ice cream, tea, and more.
+* **Nearby Search:** Find Dansals within a configurable distance.
+* **Add Dansal Locations:** Allow authenticated users to submit new Dansal locations.
+* **Authentication:** Secure user authentication with JWT.
+* **Efficient Data Fetching:** Uses tile-based fetching to retrieve location data efficiently based on map boundaries.
+* **Incremental Synchronization:** Supports fetching updated location data to reduce unnecessary network requests.
+* **Multilingual Support:** Sinhala and English language support.
+* **Bottom Sheet Interface:** Provides an interactive search and filtering panel.
+* **Responsive Mobile UI:** Designed for a smooth mobile experience.
 
-2. Start the app
+## Tech Stack
 
-   ```bash
-   npx expo start
-   ```
+* React Native
+* Expo
+* TypeScript / JavaScript
+* React Navigation
+* Axios
+* i18next
+* Expo SecureStore
+* React Native Maps
+* Ionicons
 
-In the output, you'll find options to open the app in a
+## Getting Started
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Prerequisites
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* Node.js
+* pnpm or npm
+* Expo Go or an Android emulator
+* Expo CLI through `npx`
 
-## Get a fresh project
+### Installation
 
-When you're ready, run:
+Clone the repository:
 
 ```bash
-npm run reset-project
+git clone YOUR_REPOSITORY_URL
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Navigate to the project directory:
 
-### Other setup steps
+```bash
+cd dansal
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Install dependencies:
 
-## Learn more
+```bash
+pnpm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### Environment Configuration
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Configure your backend API URL according to your development environment.
 
-## Join the community
+For example, your API configuration might look like:
 
-Join our community of developers creating universal apps.
+```js
+const API_URL = "http://10.0.2.2:3000/api";
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Use `10.0.2.2` for an Android emulator connecting to a backend running on the host machine. For physical devices, use the host machine's reachable local IP address.
+
+### Run the Application
+
+Start the Expo development server:
+
+```bash
+pnpm start
+```
+
+Run on Android:
+
+```bash
+pnpm android
+```
+
+Run on iOS:
+
+```bash
+pnpm ios
+```
+
+## Project Structure
+
+```text
+dansal/
+├── app/
+├── assets/
+├── components/
+├── contexts/
+├── hooks/
+├── i18n/
+├── services/
+├── utils/
+├── app.json
+├── package.json
+└── README.md
+```
+
+*Update the structure to match your actual frontend repository.*
+
+## Architecture
+
+The application communicates with an Express.js backend that manages authentication, Dansal locations, and geospatial queries.
+
+### Tile-Based Data Fetching
+
+Instead of requesting all Dansal locations at once, the frontend uses map boundaries and tile-based fetching to retrieve relevant data.
+
+* Fetches locations according to the visible map area.
+* Reduces unnecessary data transfer.
+* Supports incremental synchronization for updated locations.
+* Improves efficiency when users move or zoom around the map.
+
+### Authentication
+
+* Stores authentication tokens securely using Expo SecureStore.
+* Uses JWT-based authentication for protected API requests.
+* Supports authenticated location submissions.
+
+### Internationalization
+
+Uses i18next to support Sinhala and English, allowing users to interact with the application in their preferred language.
+
+## Dansal Categories
+
+The application supports multiple Dansal categories, including:
+
+* Rice and curry
+* Ice cream
+* Tea and drinks
+* Soup
+* Fruits
+* Biscuits
+* Milk
+* Belimal
+* Kos
+* Other categories
+
+## Future Improvements
+
+* Nearby Dansal notifications.
+* Improved offline support.
+* Enhanced map performance.
+* More advanced location-based filtering.
+* Better synchronization for frequently updated locations.
+
+## Contributing
+
+Contributions, suggestions, and bug reports are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Open a pull request.
+
+## License
+
+Add your preferred license if you intend to distribute the project publicly.
